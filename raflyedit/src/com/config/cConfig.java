@@ -2,6 +2,9 @@ package com.config;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
+
+import com.page.menu;
+
 import java.sql.ResultSet;
 
 public class cConfig {
@@ -15,6 +18,7 @@ public class cConfig {
     private static Connection connect ;
     private static Statement statement ;
     private static ResultSet resultData ;
+    private static ResultSet resultDataCek ;
 
     // Method static connection
     private static void connection(){ 
@@ -30,11 +34,11 @@ public class cConfig {
         }
     }
 
-    public static String user( String logUsername) {
+    public static String user( String logUsername, String logPass) {
         cConfig.connection();
 
         // nilai default var data
-        String data = "Data Masih Kosong";
+        String data = "WRONG USERNAME & PASSWORD";
 
         try {
 
@@ -42,26 +46,43 @@ public class cConfig {
             statement = connect.createStatement();
 
             // Querry MYSQL
-            String query = "SELECT * FROM user where userId = " + "'" + logUsername+"'";
+            String query = "Select * from user where userId='"+logUsername+"' and pass="+logPass;
+            String queryCek = "SELECT * FROM user";
 
             // eksekusi querry
             resultData = statement.executeQuery(query);
+            resultDataCek = statement.executeQuery(queryCek);
 
             // set var data jadi null
             data = "";
             
             // looping pengisian variabel data
-            while(resultData.next()){
-                data = "Welcome " + resultData.getString("userId") + " " + resultData.getString("role");
-            }
+            // while(resultData.next()){
+            //     data = "Welcome " + resultData.getString("userId") + " " + resultData.getString("role");
+            // }         
 
-            // if (logUsername.equals(resultData.getString(2))){
-            //     System.out.println("Sukses Login");
-            // } else {
-            //     System.out.println("Login Gagal");
+            // if(resultData.next()) {
+            //     data = "Welcome " + resultData.getString("userId") + " " + resultData.getString("role");
+            //     menu.read();
+            // } else{
+            //     System.out.println("Wrong Username & Password");
             // }
 
-                        
+            while(resultDataCek.next()) {
+                String cekUser = resultDataCek.getString("userId");
+                String cekPass = resultDataCek.getString("pass");
+
+                if((logUsername.equals(cekUser))&&(logPass.equals(cekPass)))
+                // if((logUsername.equals("rafly"))&&(logPass.equals("123")))
+                {
+                    System.out.println("WELCOME BRADER IT WORKS");
+                } else {
+                    System.out.println("wrong blokk");
+                    break;
+                }
+                break;
+            }
+
             // close statement and connection
             statement.close();
             connect.close();
@@ -378,6 +399,33 @@ public class cConfig {
             statement = connect.createStatement();
 
             String query = "INSERT INTO user VALUES (" + null + ", '" + inUser + "', '" + inPass + "', '" + inRole + "', '" + "active" + "', " + "current_timestamp())" ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static String upDataUser(String namaBaru) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "INSERT INTO candidate VALUES (" + null + ", '" + namaBaru + "', '" + "active" + "', " + "current_timestamp())" ;
 
             if(!statement.execute(query)){
                 data = true;

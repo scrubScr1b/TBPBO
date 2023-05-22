@@ -23,7 +23,7 @@ public class login {
 
             switch (pilihan) {
                 case "1":
-                    cView.user();
+                    // cView.user();
                     menu.read();
                     break;
                 case "2":

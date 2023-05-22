@@ -15,7 +15,7 @@ public class cView {
         String logUsername = input.next();
         System.out.print("password :" );
         String logPass = input.next();
-        System.out.println(cConfig.user(logUsername));
+        // System.out.println(cConfig.user(logUsername, logPass));
 
     }
 
@@ -144,6 +144,20 @@ public class cView {
             System.out.println("user gagal di tambahkan!!");
         }
 
+    }
+
+    public static void upDataUser() {
+        // Header
+        System.out.println("\n=== UBAH DATA USER ===");
+        // Isi
+        System.out.print("Input Nama User Baru : " );
+        String namaBaru = input.next();
+
+        if (cConfig.insDataCandidate(namaBaru) ){
+            System.out.println("Nama User Berhasil di Update!!");
+        } else {
+            System.out.println("Nama User Gagal di Update!!");
+        }
     }
 
 }
