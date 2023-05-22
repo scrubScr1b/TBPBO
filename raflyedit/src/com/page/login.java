@@ -24,15 +24,10 @@ public class login {
             switch (pilihan) {
                 case "1":
                     cView.user();
+                    menu.read();
                     break;
                 case "2":
-                    System.out.print("username :" );
-                    String reUsername = input.next();
-                    System.out.print("password :" );
-                    String rePass = input.next();
-                    System.out.print("re-password :" );
-                    String reEnPass = input.next();
-                    System.out.println("user created");
+                    cView.register();
                     break;
                 case "0":
                     System.out.println("Exit App");
