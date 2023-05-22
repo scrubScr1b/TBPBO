@@ -132,7 +132,7 @@ public class cConfig {
             statement = connect.createStatement();
 
             // Querry MYSQL
-            String query = "SELECT codeCandidate, candidateId, createdAt FROM candidate";
+            String query = "SELECT * FROM candidate";
 
             // eksekusi querry
             resultData = statement.executeQuery(query);
@@ -142,7 +142,7 @@ public class cConfig {
             
             // looping pengisian variabel data
             while(resultData.next()){
-                data += "id :" + resultData.getString("codeCandidate") +" Nama Kandidat :" + resultData.getString("candidateID") + ", Tgl buat : " + resultData.getString("createdAt") + "\n"; 
+                data += "id :" + resultData.getString("codeCandidate") +" Nama Kandidat :" + resultData.getString("candidateID") + ", Tgl buat : " + resultData.getString("createdAt") +" Status :" + resultData.getString("status") +"\n"; 
             }
 
             // close statement and connection
@@ -416,7 +416,7 @@ public class cConfig {
         return data;
     }
 
-    public static String upDataUser(String namaBaru) {
+    public static boolean upNameDataUser(String namaBaru, String codeUser ) {
         cConfig.connection();
         
         boolean data = false ;
@@ -425,7 +425,223 @@ public class cConfig {
 
             statement = connect.createStatement();
 
-            String query = "INSERT INTO candidate VALUES (" + null + ", '" + namaBaru + "', '" + "active" + "', " + "current_timestamp())" ;
+            String query = "UPDATE `user` SET userId ='"+namaBaru+"' WHERE codeUser ="+codeUser+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upPassDataUser(String passBaru, String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE `user` SET pass ='"+passBaru+"' WHERE codeUser ="+codeUser+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upRoleDataUser(String roleBaru, String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE `user` SET pass ='"+roleBaru+"' WHERE codeUser ="+codeUser+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upNamaEvent(String nameEventNew, String codeEvent ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE event SET eventId ='"+nameEventNew+"' WHERE codeEvent  ="+codeEvent+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upStartEvent(String startEventNew, String codeEvent ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE event SET eventDateStart ='"+startEventNew+"' WHERE codeEvent  ="+codeEvent;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upEndEvent(String endEventNew, String codeEvent ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE event SET eventDateEnd ='"+endEventNew+"' WHERE codeEvent  ="+codeEvent;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upStatusEvent(String StatusEventNew, String codeEvent ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE event SET status ='"+StatusEventNew+"' WHERE codeEvent  ="+codeEvent+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean upNameCandidate(String nameCandidateNew, String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE `candidate` SET candidateId ='"+nameCandidateNew+"' WHERE codeCandidate ="+codeUser+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+    
+    public static boolean upStatusCandidate(String statusCandidateNew, String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE `candidate` SET status ='"+statusCandidateNew+"' WHERE codeCandidate ="+codeUser+";"  ;
 
             if(!statement.execute(query)){
                 data = true;

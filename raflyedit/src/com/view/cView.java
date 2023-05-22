@@ -147,17 +147,160 @@ public class cView {
     }
 
     public static void upDataUser() {
-        // Header
-        System.out.println("\n=== UBAH DATA USER ===");
-        // Isi
-        System.out.print("Input Nama User Baru : " );
-        String namaBaru = input.next();
-
-        if (cConfig.insDataCandidate(namaBaru) ){
-            System.out.println("Nama User Berhasil di Update!!");
-        } else {
-            System.out.println("Nama User Gagal di Update!!");
+        getAllDataUser();
+        System.out.println("Input ID user yang di ingin ubah :");
+        String codeUser  = input.next();
+        while(true) {
+            System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
+            + "1. Nama User\n"
+            + "2. Password User\n"
+            + "3. Role User\n"
+            + "0. Exit\n"
+            + "Pilih [1/2/3] :");
+            Scanner input = new Scanner(System.in);
+            String pilihan = input.next();
+            if (pilihan.equalsIgnoreCase("0")) {
+            break;
+            }
+                switch(pilihan) {
+                    case "1":
+                        System.out.print("Input Nama User Baru : " );
+                        String dataBaru = input.next();
+            
+                        if (cConfig.upNameDataUser(dataBaru, codeUser) ){
+                            System.out.println("Nama User Berhasil di Update!!");
+                        } else {
+                            System.out.println("Nama User Gagal di Update!!");
+                        }
+                     break;
+                    case "2":
+                        System.out.print("Input Password User Baru : " );
+                        String passBaru = input.next();
+            
+                        if (cConfig.upPassDataUser(passBaru, codeUser) ){
+                            System.out.println("Password User Berhasil di Update!!");
+                        } else {
+                            System.out.println("Password User Gagal di Update!!");
+                        }
+                    break;
+                    case "3":
+                        System.out.print("Input Password User Baru : " );
+                        String roleBaru = input.next();
+            
+                        if (cConfig.upRoleDataUser(roleBaru, codeUser) ){
+                            System.out.println("Password User Berhasil di Update!!");
+                        } else {
+                            System.out.println("Password User Gagal di Update!!");
+                        }
+                    break;
+                    
+                }
+            }
+        
         }
-    }
 
+    public static void upDataEvent() {
+            getAllDataEvent();
+            System.out.println("Input ID Event yang di ingin ubah :");
+            String codeUser  = input.next();
+            while(true) {
+                System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
+                + "1. Nama Event\n"
+                + "2. Start Event\n"
+                + "3. End Event\n"
+                + "4. Status Event\n"
+                + "0. Exit\n"
+                + "Pilih [1/2/3/4] :");
+                Scanner input = new Scanner(System.in);
+                String pilihan = input.next();
+                if (pilihan.equalsIgnoreCase("0")) {
+                break;
+                }
+                    switch(pilihan) {
+                        case "1":
+                            System.out.print("Input Nama Event Baru : " );
+                            String nameEventNew = input.next();
+                
+                            if (cConfig.upNamaEvent(nameEventNew, codeUser) ){
+                                System.out.println("Nama Event Berhasil di Update!!");
+                            } else {
+                                System.out.println("Nama Event Gagal di Update!!");
+                            }
+                         break;
+                        case "2":
+                            System.out.print("Input Start Event Baru : " );
+                            String startEventNew = input.next();
+                
+                            if (cConfig.upStartEvent(startEventNew, codeUser) ){
+                                System.out.println("Start Event Berhasil di Update!!");
+                            } else {
+                                System.out.println("Start Event Gagal di Update!!");
+                            }
+                        break;
+                        case "3":
+                            System.out.print("Input End Event Baru : " );
+                            String endEventNew = input.next();
+                
+                            if (cConfig.upEndEvent(endEventNew, codeUser) ){
+                                System.out.println("End Event Berhasil di Update!!");
+                            } else {
+                                System.out.println("End Event Gagal di Update!!");
+                            }
+                        break;
+                        case "4":
+                            System.out.print("Input Status Event Baru : " );
+                            String StatusEventNew = input.next();
+                
+                            if (cConfig.upStatusEvent(StatusEventNew, codeUser) ){
+                                System.out.println("Status Event Berhasil di Update!!");
+                            } else {
+                                System.out.println("Status Event Gagal di Update!!");
+                            }
+                        
+                    }
+                }
+            
+            }    
+
+    public static void upDataCandidate() {
+                getAllDataCandidate();
+                System.out.println("Input ID Candidate yang di ingin ubah :");
+                String codeUser  = input.next();
+                while(true) {
+                    System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
+                    + "1. Nama Candidate\n"
+                    + "2. Status Candidate\n"
+                    + "0. Exit\n"
+                    + "Pilih [1/2] :");
+                    Scanner input = new Scanner(System.in);
+                    String pilihan = input.next();
+                    if (pilihan.equalsIgnoreCase("0")) {
+                    break;
+                    }
+                        switch(pilihan) {
+                            case "1":
+                                System.out.print("Input Nama Candidate Baru : " );
+                                String nameCandidateNew = input.next();
+                    
+                                if (cConfig.upNameCandidate(nameCandidateNew, codeUser) ){
+                                    System.out.println("Nama Candidate Berhasil di Update!!");
+                                } else {
+                                    System.out.println("Nama Candidate Gagal di Update!!");
+                                }
+                             break;
+                            case "2":
+                                System.out.print("Input Password User Baru : " );
+                                String statusCandidateNew = input.next();
+                    
+                                if (cConfig.upStatusCandidate(statusCandidateNew, codeUser) ){
+                                    System.out.println("Password User Berhasil di Update!!");
+                                } else {
+                                    System.out.println("Password User Gagal di Update!!");
+                                }
+                            break;                            
+                            }
+        }
+                
+    }
+        
 }
