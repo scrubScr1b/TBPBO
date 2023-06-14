@@ -1,0 +1,54 @@
+Create database namanya dbvote lalu jalanin querry berikut untuk membuat table:
+
+CREATE TABLE `candidate` (
+  `codeCandidate` int(11) NOT NULL AUTO_INCREMENT,
+  `candidateId` varchar(20) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `createdAt` date NOT NULL,
+  PRIMARY KEY (`codeCandidate`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `event` (
+  `codeEvent` int(11) NOT NULL AUTO_INCREMENT,
+  `eventId` varchar(20) NOT NULL,
+  `eventDateStart` date NOT NULL,
+  `eventDateEnd` date NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `createdAt` date NOT NULL,
+  PRIMARY KEY (`codeEvent`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `eventcandidate` (
+  `codeEventCandidate` int(11) NOT NULL AUTO_INCREMENT,
+  `eventCandidateId` varchar(20) NOT NULL,
+  `codeEvent` int(11) NOT NULL,
+  `codeCandidate` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  PRIMARY KEY (`codeEventCandidate`),
+  KEY `eventcandidate_FK` (`codeEvent`),
+  KEY `eventcandidate_FK_1` (`codeCandidate`),
+  CONSTRAINT `eventcandidate_FK` FOREIGN KEY (`codeEvent`) REFERENCES `event` (`codeEvent`),
+  CONSTRAINT `eventcandidate_FK_1` FOREIGN KEY (`codeCandidate`) REFERENCES `candidate` (`codeCandidate`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `user` (
+  `codeUser` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` varchar(20) NOT NULL,
+  `pass` varchar(20) NOT NULL,
+  `role` varchar(20) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `createdAt` date NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`codeUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `vote` (
+  `codeVote` int(11) NOT NULL AUTO_INCREMENT,
+  `codeEventCandidate` int(11) NOT NULL,
+  `codeUser` int(11) NOT NULL,
+  `dateVote` date NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`codeVote`),
+  KEY `vote_FK` (`codeEventCandidate`),
+  KEY `vote_FK_1` (`codeUser`),
+  CONSTRAINT `vote_FK` FOREIGN KEY (`codeEventCandidate`) REFERENCES `eventcandidate` (`codeEventCandidate`),
+  CONSTRAINT `vote_FK_1` FOREIGN KEY (`codeUser`) REFERENCES `user` (`codeUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
