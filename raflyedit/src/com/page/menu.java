@@ -1,6 +1,7 @@
 package com.page;
 import java.util.Scanner;
 import com.isiMenu.allData;
+import com.isiMenu.delData;
 import com.isiMenu.insertData;
 import com.isiMenu.updateData;
 import com.view.cView;
@@ -14,6 +15,7 @@ public class menu {
             + "2. Lihat Detail Data \n"
             + "3. Input Data Master\n"
             + "4. Ubah Data \n"
+            + "5. Hapus Data \n"
             + "0. Exit\n"
             + "Pilih [1/2] :");
             
@@ -37,6 +39,9 @@ public class menu {
                     break;
                 case "4":
                     updateData.updateData();
+                    break;
+                case "5":
+                    delData.delData();
                     break;
                 case "0":
                     System.out.println("Exit App");

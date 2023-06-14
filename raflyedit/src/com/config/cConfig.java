@@ -479,7 +479,7 @@ public class cConfig {
 
             statement = connect.createStatement();
 
-            String query = "UPDATE `user` SET pass ='"+roleBaru+"' WHERE codeUser ="+codeUser+";"  ;
+            String query = "UPDATE `user` SET role ='"+roleBaru+"' WHERE codeUser ="+codeUser+";"  ;
 
             if(!statement.execute(query)){
                 data = true;
@@ -649,6 +649,78 @@ public class cConfig {
             
 
 
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean delDataUser(String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+            statement = connect.createStatement();
+
+            String query = "DELETE FROM user WHERE codeUser="+codeUser  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+    
+    public static boolean delDataCandidate(String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+            statement = connect.createStatement();
+
+            String query = "DELETE FROM candidate WHERE codeCandidate="+codeUser  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+    
+    public static boolean delDataEvent(String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+            statement = connect.createStatement();
+
+            String query = "DELETE FROM event WHERE codeEvent="+codeUser  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
             // close statement dan koneksi
             statement.close();
             connect.close();

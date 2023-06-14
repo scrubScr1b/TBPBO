@@ -184,7 +184,7 @@ public class cView {
                         }
                     break;
                     case "3":
-                        System.out.print("Input Password User Baru : " );
+                        System.out.print("Input Role User Baru : " );
                         String roleBaru = input.next();
             
                         if (cConfig.upRoleDataUser(roleBaru, codeUser) ){
@@ -302,5 +302,45 @@ public class cView {
         }
                 
     }
+
+    public static void delDataUser() {
+        getAllDataUser();
+        System.out.println("Input ID Candidate yang di ingin ubah :");
+        String codeUser  = input.next();
+        if (cConfig.delDataUser(codeUser) ){
+            System.out.println("User Berhasil di Delete!!");
+        } else if (codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah!!");
+        }else {
+            System.out.println("User Gagal di Delete!!");
+        }
+    }
+
+    public static void delDataCandidate() {
+        getAllDataCandidate();
+        System.out.println("Input ID Candidate yang di ingin ubah :");
+        String codeUser  = input.next();
+        if (cConfig.delDataCandidate(codeUser) ){
+            System.out.println("User Berhasil di Delete!!");
+        } else if (codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah!!");
+        } else {
+            System.out.println("User Gagal di Delete!!");
+        }
+    }
+
+    public static void delDataEvent() {
+        getAllDataEvent();
+        System.out.println("Input ID Event yang di ingin ubah :");
+        String codeUser  = input.next();
         
+        if (cConfig.delDataEvent(codeUser) ){
+            System.out.println("User Berhasil di Delete!!");
+        } else if (codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah!!");
+        }else {
+            System.out.println("User Gagal di Delete!!");
+        }
+    }
+    
 }
