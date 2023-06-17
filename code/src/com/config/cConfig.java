@@ -497,6 +497,33 @@ public class cConfig {
         return data;
     }
 
+    public static boolean upStatusDataUser(String statusBaru, String codeUser ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "UPDATE `user` SET status ='"+statusBaru+"' WHERE codeUser ="+codeUser+";"  ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
     public static boolean upNamaEvent(String nameEventNew, String codeEvent ) {
         cConfig.connection();
         
