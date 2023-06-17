@@ -155,6 +155,7 @@ public class cView {
             + "1. Nama User\n"
             + "2. Password User\n"
             + "3. Role User\n"
+            + "4. Status User\n"
             + "0. Exit\n"
             + "Pilih [1/2/3] :");
             Scanner input = new Scanner(System.in);
@@ -188,9 +189,19 @@ public class cView {
                         String roleBaru = input.next();
             
                         if (cConfig.upRoleDataUser(roleBaru, codeUser) ){
-                            System.out.println("Password User Berhasil di Update!!");
+                            System.out.println("Role User Berhasil di Update!!");
                         } else {
-                            System.out.println("Password User Gagal di Update!!");
+                            System.out.println("Role User Gagal di Update!!");
+                        }
+                    break;
+                    case "4":
+                        System.out.print("Input Status User Baru : " );
+                        String statusBaru = input.next();
+            
+                        if (cConfig.upStatusDataUser(statusBaru, codeUser) ){
+                            System.out.println("Status User Berhasil di Update!!");
+                        } else {
+                            System.out.println("Status User Gagal di Update!!");
                         }
                     break;
                     
