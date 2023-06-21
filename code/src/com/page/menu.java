@@ -10,7 +10,9 @@ public class menu {
     public static void read() {
             while(true) {
             
-            System.out.print("\n======= MENU =======\n"
+            System.out.print("\n=============================================\n"+
+            "\n===                MENU                ======\n" +
+            "\n=============================================\n"
             + "1. Lihat Semua Data \n"
             + "2. Lihat Detail Data \n"
             + "3. Input Data Master\n"

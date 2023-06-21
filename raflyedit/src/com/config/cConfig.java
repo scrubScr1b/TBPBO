@@ -1,22 +1,13 @@
 package com.config;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-
-import com.page.login;
 import com.page.menu;
-import com.entity.userEntity;
-import com.mysql.cj.x.protobuf.MysqlxCrud.DataModel;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class cConfig {
-    
     // ini untuk mendefinisikan koneksi ke database akatsuki
     // private static final String koneksi = "com.mysql.jdbc.Driver"; 
     private static final String url = "jdbc:mysql://localhost:3306/dbvote";
@@ -30,7 +21,7 @@ public class cConfig {
     private static ResultSet resultDataCek ;
 
     // Method static connection
-    public static void connection(){ 
+    private static void connection(){ 
         try {
             // Regist Driver
             // Class.forName(koneksi);
@@ -42,96 +33,6 @@ public class cConfig {
             e.printStackTrace();
         }
     }
-
-    public cConfig(){ 
-        try {
-            // Regist Driver
-            // Class.forName(koneksi);
-
-            // buat koneksi db
-            connect = DriverManager.getConnection(url, user, pass);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public String LoginValidate(String userid, String password) {
-        cConfig.connection();
-        
-       
-        // Validasi input tidak boleh kosong
-        if (userid.equals("")|| password.equals("")) {
-            return "userid and password cannot be empty!";
-        }
-
-        userEntity user = new userEntity();
-        user.setUserId(userid);
-        user.setPassword(password);
-
-        // Validasi user exists pada DB
-        if (!CheckUserExists(user.getUserid())) {
-            return "userid is not exists, please try again.";
-        }
-    
-        // Validasi userid & password valid
-        if (!UserPasswordValid(user)) {
-            return "userid and password is not valid, please try again";
-        }
-        return "";
-    }
-
-    private DataSource dataSource;
-
-    public cConfig (DataSource dataSource) {
-    this.dataSource = dataSource;
-    }
-
-    public boolean CheckUserExists(String userid) {
-    String sql = "SELECT * FROM user WHERE userId = ? ";
-    cConfig.connection();
-
-    try (
-        PreparedStatement stmt = connect.prepareStatement(sql);
-    ) {
-        stmt.setString(1,userid);
-        ResultSet resultSet = stmt.executeQuery();
-
-        if (resultSet.next()) {
-            // User Valid
-            resultSet.close();
-            return true;
-        } else {
-            resultSet.close();
-            return false;
-        }
-    } catch (SQLException ex) {
-        throw new RuntimeException(ex);
-    }
-}
-
-    public boolean UserPasswordValid(userEntity user) {
-    String sql = "SELECT * FROM user WHERE userId = ? and pass = ?";
-    cConfig.connection();
-    try (
-        PreparedStatement stmt = connect.prepareStatement(sql);
-    ) {
-        stmt.setString(1,user.getUserid());
-        stmt.setString(2,user.getPassword());
-        ResultSet resultSet = stmt.executeQuery();
-
-        if (resultSet.next()) {
-            // User Valid
-            resultSet.close();
-            return true;
-        } else {
-            resultSet.close();
-            return false;
-        }
-    } catch (SQLException ex) {
-        throw new RuntimeException(ex);
-    }
-}
 
     public static String user( String logUsername, String logPass) {
         cConfig.connection();
@@ -596,33 +497,6 @@ public class cConfig {
         return data;
     }
 
-    public static boolean upStatusDataUser(String statusBaru, String codeUser ) {
-        cConfig.connection();
-        
-        boolean data = false ;
-
-        try {
-
-            statement = connect.createStatement();
-
-            String query = "UPDATE `user` SET status ='"+statusBaru+"' WHERE codeUser ="+codeUser+";"  ;
-
-            if(!statement.execute(query)){
-                data = true;
-            }
-            
-
-
-            // close statement dan koneksi
-            statement.close();
-            connect.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return data;
-    }
-
     public static boolean upNamaEvent(String nameEventNew, String codeEvent ) {
         cConfig.connection();
         
@@ -857,78 +731,4 @@ public class cConfig {
         return data;
     }
 
-    public static String getAllResultVote() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  " Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebanyak : " + resultData.getString("cnt") +", Sebagai : " + resultData.getString("eventCandidateId") +"\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String getAllResultPerEvent() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  " Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebanyak : " + resultData.getString("cnt") +", Sebagai : " + resultData.getString("eventCandidateId") +", Di Event : " + resultData.getString("eventId") + "\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-    
 }

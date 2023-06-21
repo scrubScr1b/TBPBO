@@ -5,12 +5,16 @@ import com.view.cView;
 public class allData {
     public static void allData() {
         while(true) {
-            System.out.print("\n===== PILIHAN DATA =====\n"
+            System.out.print("\n=============================================\n"+
+            "\n====            PILIHAN DATA             ====\n" +
+            "\n=============================================\n"
             + "1. Lihat Semua Data Candidate\n"
             + "2. Lihat Semua Data Event\n"
             + "3. Lihat Semua Data Event Candidate\n"
             + "4. Lihat Semua Data User\n"
             + "5. Lihat Semua Data Vote\n"
+            + "6. Lihat Hasil Vote\n"
+            + "7. Lihat Hasil Vote PerEvent\n"
             + "0. Exit\n"
             + "Pilih [1/2/3/4/5] :");
             Scanner input = new Scanner(System.in);
@@ -33,6 +37,10 @@ public class allData {
             break;
             case "5":
             cView.getAllDataVote();
+            case "6":
+           cView.getAllResultVote();
+            case "7":
+           cView.getAllResultPerEvent();
             break;
             case "0":
             System.out.println("Exit");

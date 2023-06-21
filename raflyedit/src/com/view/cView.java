@@ -39,9 +39,7 @@ public class cView {
 
     public static void getAllDataCandidate() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====            DATA CANDIDATE           ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== DATA KANDIDAT ===");
         // Isi
         
         System.out.println(cConfig.getAllDataCandidate());
@@ -50,9 +48,7 @@ public class cView {
 
     public static void getAllDataEvent() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====              DATA EVENT             ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== DATA EVENT ===");
         // Isi
         
         System.out.println(cConfig.getAllDataEvent());
@@ -61,9 +57,7 @@ public class cView {
 
     public static void getAllDataEventCandidate() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====       DATA CANDIDATE PER EVENT      ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== DATA CANIDATE PER EVENT ===");
         // Isi
         
         System.out.println(cConfig.getAllDataEventCandidate());
@@ -72,9 +66,7 @@ public class cView {
 
     public static void getAllDataUser() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====               DATA USER             ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== DATA USER ===");
         // Isi
         
         System.out.println(cConfig.getAllDataUser());
@@ -83,9 +75,7 @@ public class cView {
 
     public static void getAllDataVote() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====            DATA HASIL VOTE          ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== DATA HASIL VOTE ===");
         // Isi
         
         System.out.println(cConfig.getAllDataVote());
@@ -103,9 +93,7 @@ public class cView {
 
     public static void insDataCandidate() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====         INPUT DATA CANDIDATE        ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== INPUT DATA KANDIDAT ===");
         // Isi
         
         System.out.print("Nama Kandidat : " );
@@ -121,9 +109,7 @@ public class cView {
 
     public static void insDataEvent() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====          INPUT DATA EVENT           ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== INPUT DATA EVENT ===");
         // Isi
         
         System.out.print("Nama Event : " );
@@ -142,9 +128,7 @@ public class cView {
 
     public static void insDataUser() {
         // Header
-        System.out.println("\n=============================================\n"+
-            "\n====              BUAT AKUN              ====\n" +
-            "\n=============================================\n");
+        System.out.println("\n=== BUAT AKUN ===");
         // Isi
         
         System.out.print("Username : " );
@@ -164,16 +148,13 @@ public class cView {
 
     public static void upDataUser() {
         getAllDataUser();
-        System.out.print("Input ID user yang di ingin ubah :");
+        System.out.println("Input ID user yang di ingin ubah :");
         String codeUser  = input.next();
         while(true) {
-            System.out.print("\n=============================================\n"+
-            "\n====    PILIH DATA YANG INGIN DI UBAH    ====\n" +
-            "\n=============================================\n"
+            System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
             + "1. Nama User\n"
             + "2. Password User\n"
             + "3. Role User\n"
-            + "4. Status User\n"
             + "0. Exit\n"
             + "Pilih [1/2/3] :");
             Scanner input = new Scanner(System.in);
@@ -207,19 +188,9 @@ public class cView {
                         String roleBaru = input.next();
             
                         if (cConfig.upRoleDataUser(roleBaru, codeUser) ){
-                            System.out.println("Role User Berhasil di Update!!");
+                            System.out.println("Password User Berhasil di Update!!");
                         } else {
-                            System.out.println("Role User Gagal di Update!!");
-                        }
-                    break;
-                    case "4":
-                        System.out.print("Input Status User Baru : " );
-                        String statusBaru = input.next();
-            
-                        if (cConfig.upStatusDataUser(statusBaru, codeUser) ){
-                            System.out.println("Status User Berhasil di Update!!");
-                        } else {
-                            System.out.println("Status User Gagal di Update!!");
+                            System.out.println("Password User Gagal di Update!!");
                         }
                     break;
                     
@@ -230,12 +201,10 @@ public class cView {
 
     public static void upDataEvent() {
             getAllDataEvent();
-            System.out.print("Input ID Event yang di ingin ubah :");
+            System.out.println("Input ID Event yang di ingin ubah :");
             String codeUser  = input.next();
             while(true) {
-                System.out.print("\n=============================================\n"+
-                "\n====    PILIH DATA YANG INGIN DI UBAH    ====\n" +
-                "\n=============================================\n"
+                System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
                 + "1. Nama Event\n"
                 + "2. Start Event\n"
                 + "3. End Event\n"
@@ -298,9 +267,7 @@ public class cView {
                 System.out.println("Input ID Candidate yang di ingin ubah :");
                 String codeUser  = input.next();
                 while(true) {
-                    System.out.print("\n=============================================\n"+
-                "\n====    PILIH DATA YANG INGIN DI UBAH    ====\n" +
-                "\n=============================================\n"
+                    System.out.print("\n===== PILIH YANG INGIN DI UBAH =====\n"
                     + "1. Nama Candidate\n"
                     + "2. Status Candidate\n"
                     + "0. Exit\n"
@@ -338,7 +305,7 @@ public class cView {
 
     public static void delDataUser() {
         getAllDataUser();
-        System.out.print("Input ID Candidate yang di ingin ubah :");
+        System.out.println("Input ID Candidate yang di ingin ubah :");
         String codeUser  = input.next();
         if (cConfig.delDataUser(codeUser) ){
             System.out.println("User Berhasil di Delete!!");
@@ -351,7 +318,7 @@ public class cView {
 
     public static void delDataCandidate() {
         getAllDataCandidate();
-        System.out.print("Input ID Candidate yang di ingin ubah :");
+        System.out.println("Input ID Candidate yang di ingin ubah :");
         String codeUser  = input.next();
         if (cConfig.delDataCandidate(codeUser) ){
             System.out.println("User Berhasil di Delete!!");
@@ -364,7 +331,7 @@ public class cView {
 
     public static void delDataEvent() {
         getAllDataEvent();
-        System.out.print("Input ID Event yang di ingin ubah :");
+        System.out.println("Input ID Event yang di ingin ubah :");
         String codeUser  = input.next();
         
         if (cConfig.delDataEvent(codeUser) ){
@@ -376,26 +343,4 @@ public class cView {
         }
     }
     
-    public static void getAllResultVote() {
-        // Header
-        System.out.println("\n=============================================\n"+
-            "\n====            DATA HASIL VOTE          ====\n" +
-            "\n=============================================\n");
-        // Isi
-        
-        System.out.println(cConfig.getAllResultVote());
-
-    }
-
-    public static void getAllResultPerEvent() {
-        // Header
-        System.out.println("\n=============================================\n"+
-            "\n====       DATA HASIL VOTE PER EVENT      ====\n" +
-            "\n=============================================\n");
-        // Isi
-        
-        System.out.println(cConfig.getAllResultPerEvent());
-
-    }
-
 }
