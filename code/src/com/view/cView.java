@@ -175,7 +175,7 @@ public class cView {
             + "3. Role User\n"
             + "4. Status User\n"
             + "0. Exit\n"
-            + "Pilih [1/2/3] :");
+            + "Pilih [1/2/3/4] :");
             Scanner input = new Scanner(System.in);
             String pilihan = input.next();
             if (pilihan.equalsIgnoreCase("0")) {
@@ -395,6 +395,51 @@ public class cView {
         // Isi
         
         System.out.println(cConfig.getAllResultPerEvent());
+
+    }
+
+    public static void pemenangPilkatsuk() {
+        // Header
+        System.out.println(
+            "\nDengan Pemilihan Voting yang sudah berjalan maka hasil dari Pilkatsuk adalah sebagai berikut :");
+        // Isi
+        
+        System.out.println(cConfig.pemenangPilkatsukKetua());
+        System.out.println(cConfig.pemenangPilkatsukWakil());
+
+    }
+
+    public static void pemenangPilkatsukPerDesa() {
+        // Header
+        System.out.println(
+            "\nHasil Pilkatsuk Perdesa adalah sebagai berikut : \n");
+        // Isi
+        System.out.println("Hasil Ketua ");
+        System.out.println(cConfig.hasilPilkatsukPerEventKetua());
+        System.out.println("Hasil Wakil ");
+        System.out.println(cConfig.hasilPilkatsukPerEventWakil());
+
+    }
+
+    public static void lihatKandidat() {
+        // Header
+        System.out.println("\n=============================================\n"+
+            "\n====               KANDIDAT               ====\n" +
+            "\n=============================================\n");
+        // Isi
+        
+        System.out.println(cConfig.lihatKandidat());
+
+    }
+
+    public static void lihatDesa() {
+        // Header
+        System.out.println("\n=============================================\n"+
+            "\n====                DESA                  ====\n" +
+            "\n=============================================\n");
+        // Isi
+        
+        System.out.println(cConfig.lihatDesa());
 
     }
 

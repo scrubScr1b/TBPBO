@@ -7,6 +7,7 @@ import com.view.cView;
 public class login {
 
     public static void ShowLoginPage() {
+        
         Scanner inputScanner = new Scanner(System.in);
 
         System.out.print("\n=============================================\n"+
@@ -25,13 +26,14 @@ public class login {
         if (sValidate.equals("")) {
             System.out.println();
             System.out.println("LOGIN SUCCESS !!!");
-            menu.read();
+            menu.menuUser();
         } else {
             System.out.println();
             System.out.println("LOGIN FAILED - " +sValidate);
             welcome.main(null);
         }
-        inputScanner.close();
+        // close scanner tp kayanya gausah
+        // inputScanner.close();
 
     }
     
