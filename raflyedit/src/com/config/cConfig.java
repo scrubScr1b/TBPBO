@@ -1,23 +1,13 @@
 package com.config;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-
-import com.page.login;
 import com.page.menu;
-import com.view.cView;
-import com.entity.userEntity;
-import com.mysql.cj.x.protobuf.MysqlxCrud.DataModel;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class cConfig {
-    
     // ini untuk mendefinisikan koneksi ke database akatsuki
     // private static final String koneksi = "com.mysql.jdbc.Driver"; 
     private static final String url = "jdbc:mysql://localhost:3306/dbvote";
@@ -29,10 +19,9 @@ public class cConfig {
     private static Statement statement ;
     private static ResultSet resultData ;
     private static ResultSet resultDataCek ;
-    private DataSource dataSource;
 
     // Method static connection
-    public static void connection(){ 
+    private static void connection(){ 
         try {
             // Regist Driver
             // Class.forName(koneksi);
@@ -45,102 +34,63 @@ public class cConfig {
         }
     }
 
-    public cConfig(){ 
+    public static String user( String logUsername, String logPass) {
+        cConfig.connection();
+
+        // nilai default var data
+        String data = "WRONG USERNAME & PASSWORD";
+
         try {
-            // Regist Driver
-            // Class.forName(koneksi);
 
-            // buat koneksi db
-            connect = DriverManager.getConnection(url, user, pass);
+            // buat object statement yang ambil dari koneksi
+            statement = connect.createStatement();
 
+            // Querry MYSQL
+            String query = "Select * from user where userId='"+logUsername+"' and pass="+logPass;
+            String queryCek = "SELECT * FROM user";
+
+            // eksekusi querry
+            resultData = statement.executeQuery(query);
+            resultDataCek = statement.executeQuery(queryCek);
+
+            // set var data jadi null
+            data = "";
+            
+            // looping pengisian variabel data
+            // while(resultData.next()){
+            //     data = "Welcome " + resultData.getString("userId") + " " + resultData.getString("role");
+            // }         
+
+            // if(resultData.next()) {
+            //     data = "Welcome " + resultData.getString("userId") + " " + resultData.getString("role");
+            //     menu.read();
+            // } else{
+            //     System.out.println("Wrong Username & Password");
+            // }
+
+            while(resultDataCek.next()) {
+                String cekUser = resultDataCek.getString("userId");
+                String cekPass = resultDataCek.getString("pass");
+
+                if((logUsername.equals(cekUser))&&(logPass.equals(cekPass)))
+                // if((logUsername.equals("rafly"))&&(logPass.equals("123")))
+                {
+                    System.out.println("WELCOME BRADER IT WORKS");
+                } else {
+                    System.out.println("wrong blokk");
+                    break;
+                }
+                break;
+            }
+
+            // close statement and connection
+            statement.close();
+            connect.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    public String LoginValidate(String userid, String password) {
-        cConfig.connection();
-        
-       
-        // Validasi input tidak boleh kosong
-        if (userid.equals("")|| password.equals("")) {
-            return "userid and password cannot be empty!";
-        }
-
-        userEntity user = new userEntity();
-        user.setUserId(userid);
-        user.setPassword(password);
-
-        // Validasi user exists pada DB
-        if (!CheckUserExists(user.getUserid())) {
-            return "userid is not exists, please try again.";
-        }
-    
-        // Validasi userid & password valid
-        if (!UserPasswordValid(user)) {
-            return "userid and password is not valid, please try again";
-        }
-        return "";
-    }
-
-    public static String MenuValidate(String role) {
-        cConfig.connection();
-
-       if (role.equals("Admin")) {
-            menu.menuAdmin();
-        }
-
-        return "";
-    }
-
-    public cConfig (DataSource dataSource) {
-    this.dataSource = dataSource;
-    }
-
-    public boolean CheckUserExists(String userid) {
-    String sql = "SELECT * FROM user WHERE userId = ? ";
-    cConfig.connection();
-
-    try (
-        PreparedStatement stmt = connect.prepareStatement(sql);
-    ) {
-        stmt.setString(1,userid);
-        ResultSet resultSet = stmt.executeQuery();
-
-        if (resultSet.next()) {
-            // User Valid
-            resultSet.close();
-            return true;
-        } else {
-            resultSet.close();
-            return false;
-        }
-    } catch (SQLException ex) {
-        throw new RuntimeException(ex);
-    }
-}
-
-    public boolean UserPasswordValid(userEntity user) {
-    String sql = "SELECT * FROM user WHERE userId = ? and pass = ?";
-    cConfig.connection();
-    try (
-        PreparedStatement stmt = connect.prepareStatement(sql);
-    ) {
-        stmt.setString(1,user.getUserid());
-        stmt.setString(2,user.getPassword());
-        ResultSet resultSet = stmt.executeQuery();
-
-        if (resultSet.next()) {
-            // User Valid
-            resultSet.close();
-            return true;
-        } else {
-            resultSet.close();
-            return false;
-        }
-        } catch (SQLException ex) {
-        throw new RuntimeException(ex);
-        }
+        return data;
     }
 
     public static boolean register( String regUsername, String regPass ) {
@@ -192,7 +142,7 @@ public class cConfig {
             
             // looping pengisian variabel data
             while(resultData.next()){
-                data += "ID :" + resultData.getString("codeCandidate") +" Nama Kandidat :" + resultData.getString("candidateID") + ", Tgl buat : " + resultData.getString("createdAt") +" Status :" + resultData.getString("status") +"\n"; 
+                data += "id :" + resultData.getString("codeCandidate") +" Nama Kandidat :" + resultData.getString("candidateID") + ", Tgl buat : " + resultData.getString("createdAt") +" Status :" + resultData.getString("status") +"\n"; 
             }
 
             // close statement and connection
@@ -227,7 +177,7 @@ public class cConfig {
             
             // looping pengisian variabel data
             while(resultData.next()){
-                data += " ID : " + resultData.getString("codeEvent") +" Nama Event : " + resultData.getString("eventId") + " Start " + resultData.getString("eventDateStart") + " sd " + resultData.getString("eventDateEnd") +" Status = " +resultData.getString("status") +" Created At "+resultData.getString("createdAt") + "\n" ; 
+                data += " id : " + resultData.getString("codeEvent") +" Nama Event : " + resultData.getString("eventId") + " Start " + resultData.getString("eventDateStart") + " sd " + resultData.getString("eventDateEnd") +" Status = " +resultData.getString("status") +" Created At "+resultData.getString("createdAt") + "\n" ; 
             }
 
             // close statement and connection
@@ -262,7 +212,7 @@ public class cConfig {
             
             // looping pengisian variabel data
             while(resultData.next()){
-                data += "ID : " + resultData.getString("codeEventCandidate") +" Pemilihan : " + resultData.getString("eventCandidateId") + " Nama Kandidat : " + resultData.getString("candidateId") + " Tempat Acara  : " + resultData.getString("eventId") +" Status : " +resultData.getString("status") +"\n" ; 
+                data += "id : " + resultData.getString("codeEventCandidate") +" Pemilihan : " + resultData.getString("eventCandidateId") + " Nama Kandidat : " + resultData.getString("candidateId") + " Tempat Acara  : " + resultData.getString("eventId") +" Status : " +resultData.getString("status") +"\n" ; 
             }
 
             // close statement and connection
@@ -297,7 +247,7 @@ public class cConfig {
             
             // looping pengisian variabel data
             while(resultData.next()){
-                data += "ID : " + resultData.getString("codeUser") +" Nama User : " + resultData.getString("userId") + " Pass User : " + resultData.getString("pass") + " Role : " + resultData.getString("role") +" Status : " +resultData.getString("status") +" Tgl buat "+resultData.getString("createdAt") + "\n" ; 
+                data += "id : " + resultData.getString("codeUser") +" Nama User : " + resultData.getString("userId") + " Pass User : " + resultData.getString("pass") + " Role : " + resultData.getString("role") +" Status : " +resultData.getString("status") +" Tgl buat "+resultData.getString("createdAt") + "\n" ; 
             }
 
             // close statement and connection
@@ -334,7 +284,7 @@ public class cConfig {
             while(resultData.next()){
                 // data +=  "Nama Kandidat : " + resultData.getString("candidateId") + "\nDipilih Sebagai : " + resultData.getString("eventCandidateId") + "\nOleh : " + resultData.getString("userId") +"\nDi Acara : " +resultData.getString("eventId") +"\nPada Tanggal "+resultData.getString("dateVote") +"\n===========================\n" ; 
 
-                data +=  "ID : " + resultData.getString("codeVote") +" Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebagai : " + resultData.getString("eventCandidateId") + ", Oleh : " + resultData.getString("userId") +", Di Acara : " +resultData.getString("eventId") +", Pada Tanggal "+resultData.getString("dateVote") +"\n" ; 
+                data +=  "id : " + resultData.getString("codeVote") +" Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebagai : " + resultData.getString("eventCandidateId") + ", Oleh : " + resultData.getString("userId") +", Di Acara : " +resultData.getString("eventId") +", Pada Tanggal "+resultData.getString("dateVote") +"\n" ; 
 
             }
 
@@ -530,33 +480,6 @@ public class cConfig {
             statement = connect.createStatement();
 
             String query = "UPDATE `user` SET role ='"+roleBaru+"' WHERE codeUser ="+codeUser+";"  ;
-
-            if(!statement.execute(query)){
-                data = true;
-            }
-            
-
-
-            // close statement dan koneksi
-            statement.close();
-            connect.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return data;
-    }
-
-    public static boolean upStatusDataUser(String statusBaru, String codeUser ) {
-        cConfig.connection();
-        
-        boolean data = false ;
-
-        try {
-
-            statement = connect.createStatement();
-
-            String query = "UPDATE `user` SET status ='"+statusBaru+"' WHERE codeUser ="+codeUser+";"  ;
 
             if(!statement.execute(query)){
                 data = true;
@@ -807,331 +730,5 @@ public class cConfig {
 
         return data;
     }
-
-    public static String getAllResultVote() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  " Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebanyak : " + resultData.getString("cnt") +", Sebagai : " + resultData.getString("eventCandidateId") +"\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String getAllResultPerEvent() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  " Nama Kandidat : " + resultData.getString("candidateId") + ", Dipilih Sebanyak : " + resultData.getString("cnt") +", Sebagai : " + resultData.getString("eventCandidateId") +", Di Event : " + resultData.getString("eventId") + "\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-    
-    public static String pemenangPilkatsukKetua() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query1 = "SELECT candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate WHERE eventcandidate.eventCandidateId = 'Ketua' GROUP BY 1,2 ORDER BY cnt DESC limit 1";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query1);
-
-            // set var data jadi null
-            data = "";
-            
-            resultData.next() ;
-            data +=  "Ketua : " + resultData.getString("candidateId");
-
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String pemenangPilkatsukWakil() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query1 = "SELECT candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate WHERE eventcandidate.eventCandidateId = 'Wakil' GROUP BY 1,2 ORDER BY cnt DESC limit 1";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query1);
-
-            // set var data jadi null
-            data = "";
-            
-            resultData.next() ;
-            data +=  "Wakil : " + resultData.getString("candidateId");
-
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String hasilPilkatsukPerEventKetua() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT event.eventId, candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate WHERE eventcandidate.eventCandidateId = 'KETUA' GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String hasilPilkatsukPerEventWakil() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query = "SELECT event.eventId, candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate WHERE eventcandidate.eventCandidateId = 'WAKIL' GROUP BY 1,2,3 ORDER BY cnt DESC";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query);
-
-            // set var data jadi null
-            data = "";
-
-            // looping pengisian variabel data
-            while(resultData.next()){
-
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
-
-            }
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String lihatDesa() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query1 = "SELECT * from event";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query1);
-
-            // set var data jadi null
-            data = "";
-            
-            // looping pengisian variabel data
-            while(resultData.next()){
-                data +=  resultData.getString("codeEvent") + "." + resultData.getString("eventId") + "\n";
-
-            }
-
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String lihatKandidat() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query1 = "SELECT * from candidate";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query1);
-
-            // set var data jadi null
-            data = "";
-            
-            // looping pengisian variabel data
-            while(resultData.next()){
-                data +=  resultData.getString("codeCandidate") + "." + resultData.getString("candidateId") + "\n";
-
-            }
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public static String lihatDesaVoter() {
-        cConfig.connection();
-
-        // nilai default var data
-        String data = "Data Masih Kosong";
-
-        try {
-
-            // buat object statement yang ambil dari koneksi
-            statement = connect.createStatement();
-
-            // Querry MYSQL
-            String query1 = "SELECT * from event";
-
-            // eksekusi querry
-            resultData = statement.executeQuery(query1);
-
-            // set var data jadi null
-            data = "";
-            
-            // looping pengisian variabel data
-            while(resultData.next()){
-                data +=  resultData.getString("codeEvent") + "." + resultData.getString("eventId") + "\n";
-
-            }
-
-
-            // close statement and connection
-            statement.close();
-            connect.close();
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
 
 }
