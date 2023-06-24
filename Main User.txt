@@ -1,0 +1,74 @@
+Main User
+=============================================
+====               MENU                  ====
+=============================================
+1.Voting
+2.Lihat Kandidat
+3.Lihat Acara
+Pilihan[1/2/3]: 1
+
+2.
+=============================================
+====              KANDIDAT               ====
+=============================================
+List Kandidat :
+1.Itachi
+2.Kisame
+3.Deidara
+4.Pain
+5.Kakuzu
+
+3.
+=============================================
+====               ACARA                 ====
+=============================================
+List Acara :
+1.Iwagakure
+2.Konohagakure 
+3.Sunagakure
+4.Kumogakure
+5.Kirigakure
+
+
+
+1.
+=============================================
+====              VOTING                 ====
+=============================================
+List Acara :
+1.Iwagakure
+2.Konohagakure 
+3.Sunagakure
+4.Kumogakure
+5.Kirigakure
+
+Pilih Acara : 1
+
+1.1
+=============================================
+====             IWAGAKURE               ====
+=============================================
+List Kandidat :
+1.Itachi
+2.Kisame
+3.Deidara
+4.Pain
+5.Kakuzu
+
+Pilih Calon Kandidat sebagai Ketua Akatsuki : 2
+
+List Kandidat :
+1.Itachi
+2.Kisame
+3.Deidara
+4.Pain
+5.Kakuzu
+
+Pilih Calon Kandidat sebagai Wakil Ketua Akatsuki : 1
+
+!! Vote Sudah Tersimpan !!
+
+Apakah data yang di Voting sudah benar? [Y/N] :
+
+
+
