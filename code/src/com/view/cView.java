@@ -427,7 +427,7 @@ public class cView {
             "\n====               KANDIDAT               ====\n" +
             "\n=============================================\n");
         // Isi
-        
+        System.out.println("List Kandidat :");
         System.out.println(cConfig.lihatKandidat());
 
     }
@@ -438,9 +438,61 @@ public class cView {
             "\n====                DESA                  ====\n" +
             "\n=============================================\n");
         // Isi
-        
+        System.out.println("List Desa :");
         System.out.println(cConfig.lihatDesa());
 
     }
 
-}
+    public static void lihatDesaVoter() {
+        // Header
+        System.out.println("\n=============================================\n"+
+            "\n====                DESA                  ====\n" +
+            "\n=============================================\n");
+        // Isi
+        
+        System.out.println(cConfig.lihatDesa());
+        System.out.println();
+        System.out.print("Pilih Acara : " );
+        String lihatDesaVoter = input.next();
+       
+        switch(lihatDesaVoter) {
+                    case "1":
+                        System.out.print("\n=============================================\n"+
+                    "\n====              IWAGAKURE               ====\n" +
+                    "\n=============================================\n");
+                     break;
+                     case "2":
+                        System.out.print("\n=============================================\n"+
+                    "\n====              KIRIGAKURE               ====\n" +
+                    "\n=============================================\n");
+                     break;
+                     case "3":
+                        System.out.print("\n=============================================\n"+
+                    "\n====              KONOHAGAKURE               ====\n" +
+                    "\n=============================================\n");
+                     break;
+                     case "4":
+                        System.out.print("\n=============================================\n"+
+                    "\n====              SUNAGAKURE               ====\n" +
+                    "\n=============================================\n");
+                     break;
+                     case "5":
+                        System.out.print("\n=============================================\n"+
+                    "\n====              WAWAGAKURE               ====\n" +
+                    "\n=============================================\n");
+                     break;
+                     
+                    
+                }
+                System.out.println("List Kandidat :");
+                System.out.println(cConfig.lihatKandidat());
+                System.out.print("Pilih Calon Kandidat sebagai Ketua Akatsuki : " );
+                String ketua = input.next();
+                System.out.print("Pilih Calon Kandidat sebagai Wakil Ketua Akatsuki : " );
+                String wakil = input.next();
+
+        }
+
+    }
+    
+

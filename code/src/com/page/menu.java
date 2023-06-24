@@ -79,7 +79,7 @@ public class menu {
 
             switch (pilihan) {
                 case "1":
-                                  
+                    cView.lihatDesaVoter();
                     break;
                 case "2":
                     cView.lihatKandidat();

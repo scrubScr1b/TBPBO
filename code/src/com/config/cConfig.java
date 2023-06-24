@@ -1096,5 +1096,42 @@ public class cConfig {
         return data;
     }
 
+    public static String lihatDesaVoter() {
+        cConfig.connection();
+
+        // nilai default var data
+        String data = "Data Masih Kosong";
+
+        try {
+
+            // buat object statement yang ambil dari koneksi
+            statement = connect.createStatement();
+
+            // Querry MYSQL
+            String query1 = "SELECT * from event";
+
+            // eksekusi querry
+            resultData = statement.executeQuery(query1);
+
+            // set var data jadi null
+            data = "";
+            
+            // looping pengisian variabel data
+            while(resultData.next()){
+                data +=  resultData.getString("codeEvent") + "." + resultData.getString("eventId") + "\n";
+
+            }
+
+
+            // close statement and connection
+            statement.close();
+            connect.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 
 }
