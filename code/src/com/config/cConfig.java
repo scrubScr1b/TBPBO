@@ -3,13 +3,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Scanner;
 
 import javax.sql.DataSource;
 
-import com.page.login;
-import com.page.menu;
-import com.view.cView;
 import com.entity.userEntity;
 
 
@@ -28,7 +24,6 @@ public class cConfig {
     private static Connection connect ;
     private static Statement statement ;
     private static ResultSet resultData ;
-    private static ResultSet resultDataCek ;
     private DataSource dataSource;
 
     // Method static connection
@@ -840,7 +835,7 @@ public class cConfig {
             statement = connect.createStatement();
 
             // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
+            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2 ORDER BY cnt DESC";
 
             // eksekusi querry
             resultData = statement.executeQuery(query);
@@ -993,7 +988,7 @@ public class cConfig {
             // looping pengisian variabel data
             while(resultData.next()){
 
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
+                data +=  "Desa : " + resultData.getString("eventId") + ", Memilih : " + resultData.getString("candidateId") + ", Sebanyak : " + resultData.getString("cnt") + "\n"; 
 
             }
 
@@ -1030,7 +1025,7 @@ public class cConfig {
             // looping pengisian variabel data
             while(resultData.next()){
 
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
+                data +=  "Desa : " + resultData.getString("eventId") + ", Memilih : " + resultData.getString("candidateId") + ", Sebanyak : " + resultData.getString("cnt") + "\n"; 
 
             }
 

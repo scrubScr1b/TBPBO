@@ -1,26 +1,12 @@
 package com.view;
 
 import com.config.cConfig;
-import com.page.login;
 
 import java.util.Scanner;
 
 public class cView {
 
     private static Scanner input = new Scanner(System.in);
-
-    public static void user() {
-        // Header
-        System.out.println("\n=== MASUK ===");
-        // Isi
-
-        System.out.print("username :");
-        String logUsername = input.next();
-        System.out.print("password :");
-        String logPass = input.next();
-        // System.out.println(cConfig.user(logUsername, logPass));
-
-    }
 
     public static void register() {
         // Header
@@ -343,7 +329,9 @@ public class cView {
         getAllDataUser();
         System.out.print("Input ID Candidate yang di ingin ubah :");
         String codeUser = input.next();
-        if (cConfig.delDataUser(codeUser)) {
+        if ( codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !!");
+        }else if (cConfig.delDataUser(codeUser)) {
             System.out.println("User Berhasil di Delete!!");
         } else if (codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah!!");
@@ -356,7 +344,9 @@ public class cView {
         getAllDataCandidate();
         System.out.print("Input ID Candidate yang di ingin ubah :");
         String codeUser = input.next();
-        if (cConfig.delDataCandidate(codeUser)) {
+        if ( codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !!");
+        }else if (cConfig.delDataCandidate(codeUser)) {
             System.out.println("User Berhasil di Delete!!");
         } else if (codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah!!");
@@ -369,8 +359,9 @@ public class cView {
         getAllDataEvent();
         System.out.print("Input ID Event yang di ingin ubah :");
         String codeUser = input.next();
-
-        if (cConfig.delDataEvent(codeUser)) {
+        if ( codeUser.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !!");
+        }else if (cConfig.delDataEvent(codeUser)) {
             System.out.println("User Berhasil di Delete!!");
         } else if (codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah!!");
@@ -417,9 +408,9 @@ public class cView {
         System.out.println(
                 "\nHasil Pilkatsuk Perdesa adalah sebagai berikut : \n");
         // Isi
-        System.out.println("Hasil Ketua ");
+        System.out.println("Hasil Ketua :");
         System.out.println(cConfig.hasilPilkatsukPerEventKetua());
-        System.out.println("Hasil Wakil ");
+        System.out.println("Hasil Wakil :");
         System.out.println(cConfig.hasilPilkatsukPerEventWakil());
 
     }
