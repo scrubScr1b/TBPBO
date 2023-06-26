@@ -451,6 +451,9 @@ public class cView {
         System.out.println();
         System.out.print("Pilih Acara : ");
         String lihatDesaVoter = input.next();
+        if ( lihatDesaVoter.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !! Vote kamu tidak akan tersimpan !!");
+        }
         System.out.println("\n=============================================\n" +
                 "\n====               VOTING                 ====\n" +
                 "\n=============================================\n");
@@ -459,17 +462,22 @@ public class cView {
         System.out.println(cConfig.lihatKandidat());
         System.out.print("Pilih Calon Kandidat sebagai Ketua Akatsuki : ");
         String ketua = input.next();
-        cConfig.ngeVoteKetua(ketua, lihatDesaVoter);
+        if ( ketua.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !! Vote kamu tidak akan tersimpan !!");
+        } else if (cConfig.ngeVoteKetua(ketua, lihatDesaVoter)) {}
+        
         System.out.print("Pilih Calon Kandidat sebagai Wakil Ketua Akatsuki : ");
         String wakil = input.next();
-        cConfig.ngeVoteWakil(wakil, lihatDesaVoter);
+        if ( wakil.equalsIgnoreCase("0")) {
+            System.out.println("Pilihan Salah !! Vote kamu tidak akan tersimpan !!");
+        } else if (cConfig.ngeVoteWakil(wakil, lihatDesaVoter)) {}
 
         System.out.print("Apakah data yang di Voting sudah benar? [Y/N] : ");
         String jwb = input.next();
 
         switch (jwb) {
             case "Y":
-                System.out.print("Input id tiket vote anda untuk menkonfirmasi hasil voting :");
+                System.out.print("Input id tiket vote anda untuk menkonfirmasi hasil voting : ");
                 String tiketId = input.next();
                 cConfig.voteKetua(tiketId);
                 cConfig.voteWakil(tiketId);

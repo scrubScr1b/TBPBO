@@ -16,7 +16,7 @@ public class cConfig {
     
     // ini untuk mendefinisikan koneksi ke database akatsuki
     // private static final String koneksi = "com.mysql.jdbc.Driver"; 
-    private static final String url = "jdbc:mysql://localhost:3306/dbvote2";
+    private static final String url = "jdbc:mysql://localhost:3306/dbvote";
     private static final String user = "root";
     private static final String pass = "";
 
