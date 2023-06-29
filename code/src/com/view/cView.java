@@ -11,7 +11,7 @@ public class cView {
     public static void register() {
         // Header
         System.out.println("\n=== BUAT AKUN ===");
-        // Isi
+        // Isif
 
         System.out.print("username : ");
         String regUsername = input.next();
@@ -347,11 +347,11 @@ public class cView {
         if ( codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah !!");
         }else if (cConfig.delDataCandidate(codeUser)) {
-            System.out.println("User Berhasil di Delete!!");
+            System.out.println("Candidate Berhasil di Delete!!");
         } else if (codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah!!");
         } else {
-            System.out.println("User Gagal di Delete!!");
+            System.out.println("Candidate Gagal di Delete!!");
         }
     }
 
@@ -362,11 +362,11 @@ public class cView {
         if ( codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah !!");
         }else if (cConfig.delDataEvent(codeUser)) {
-            System.out.println("User Berhasil di Delete!!");
+            System.out.println("Event Berhasil di Delete!!");
         } else if (codeUser.equalsIgnoreCase("0")) {
             System.out.println("Pilihan Salah!!");
         } else {
-            System.out.println("User Gagal di Delete!!");
+            System.out.println("Event Gagal di Delete!!");
         }
     }
 
@@ -418,7 +418,7 @@ public class cView {
     public static void lihatKandidat() {
         // Header
         System.out.println("\n=============================================\n" +
-                "\n====               KANDIDAT               ====\n" +
+                "\n====               KANDIDAT              ====\n" +
                 "\n=============================================\n");
         // Isi
         System.out.println("List Kandidat :");
@@ -429,7 +429,7 @@ public class cView {
     public static void lihatDesa() {
         // Header
         System.out.println("\n=============================================\n" +
-                "\n====                DESA                  ====\n" +
+                "\n====                DESA                 ====\n" +
                 "\n=============================================\n");
         // Isi
         System.out.println("List Desa :");
@@ -443,7 +443,7 @@ public class cView {
 
         // Header
         System.out.println("\n=============================================\n" +
-                "\n====                DESA                  ====\n" +
+                "\n====                DESA                 ====\n" +
                 "\n=============================================\n");
         // Isi
 
@@ -455,7 +455,7 @@ public class cView {
             System.out.println("Pilihan Salah !! Vote kamu tidak akan tersimpan !!");
         }
         System.out.println("\n=============================================\n" +
-                "\n====               VOTING                 ====\n" +
+                "\n====               VOTING                ====\n" +
                 "\n=============================================\n");
 
         System.out.println("List Kandidat :");
