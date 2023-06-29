@@ -17,12 +17,21 @@ public class cView {
         String regUsername = input.next();
         System.out.print("password : ");
         String regPass = input.next();
+        System.out.print("input password lagi: ");
+        String regPass2 = input.next();
 
-        if (cConfig.register(regUsername, regPass)) {
-            System.out.println("user berhasil di tambahkan!!");
+        if(regPass.equals(regPass2)) {
+            if (cConfig.register(regUsername, regPass)) {
+                System.out.println("user berhasil di tambahkan!!");
+            } else {
+                System.out.println("user gagal di tambahkan!!");
+            }
         } else {
+            System.out.println("password tidak sama");
             System.out.println("user gagal di tambahkan!!");
         }
+
+        
 
     }
 
