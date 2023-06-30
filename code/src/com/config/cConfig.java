@@ -1267,14 +1267,8 @@ public class cConfig {
 
             data = "";
 
-            int count = 0;
             while(resultData.next()) {
                 data +=  "Tiket Voting kamu adalah : " + resultData.getString("codeUser") ; 
-                count++;
-            }
-
-            if(count == 0) {
-                data = "Data tidak ditemukan";
             }
 
             // close statement
@@ -1286,6 +1280,7 @@ public class cConfig {
         }
 
         return data;
+
         
     }
     

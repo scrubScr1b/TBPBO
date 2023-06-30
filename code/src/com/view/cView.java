@@ -1,6 +1,7 @@
 package com.view;
 
 import com.config.cConfig;
+import com.page.login;
 
 import java.util.Scanner;
 
@@ -488,10 +489,14 @@ public class cView {
             case "Y":
                 System.out.print("Input id tiket vote anda untuk menkonfirmasi hasil voting : ");
                 String tiketId = input.next();
-                cConfig.voteKetua(tiketId);
-                cConfig.voteWakil(tiketId);
-                System.out.println("!! Vote Sudah Tersimpan !!");
+                if(tiketId.equalsIgnoreCase("0")) {
+                    System.out.println("!! Vote Tidak Tersimpan !!");
                 break;
+                } else {
+                    cConfig.voteKetua(tiketId);
+                    cConfig.voteWakil(tiketId);
+                    System.out.println("!! Vote Sudah Tersimpan !!");
+                } break;
             case "N":
                 System.out.println("!! Vote Tidak Tersimpan !!");
 
