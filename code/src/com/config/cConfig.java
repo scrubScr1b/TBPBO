@@ -5,13 +5,9 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 
-import com.page.login;
-import com.page.menu;
-import com.view.cView;
 import com.entity.userEntity;
-import com.mysql.cj.x.protobuf.MysqlxCrud.DataModel;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +16,7 @@ public class cConfig {
     
     // ini untuk mendefinisikan koneksi ke database akatsuki
     // private static final String koneksi = "com.mysql.jdbc.Driver"; 
-    private static final String url = "jdbc:mysql://localhost:3306/dbvote";
+    private static final String url = "jdbc:mysql://localhost:3306/dbvote4";
     private static final String user = "root";
     private static final String pass = "";
 
@@ -28,7 +24,6 @@ public class cConfig {
     private static Connection connect ;
     private static Statement statement ;
     private static ResultSet resultData ;
-    private static ResultSet resultDataCek ;
     private DataSource dataSource;
 
     // Method static connection
@@ -58,7 +53,7 @@ public class cConfig {
         }
     }
     
-    public String LoginValidate(String userid, String password) {
+    public String LoginValidate(String userid, String password, String role) {
         cConfig.connection();
         
        
@@ -70,6 +65,7 @@ public class cConfig {
         userEntity user = new userEntity();
         user.setUserId(userid);
         user.setPassword(password);
+        user.setRole(role);
 
         // Validasi user exists pada DB
         if (!CheckUserExists(user.getUserid())) {
@@ -80,16 +76,11 @@ public class cConfig {
         if (!UserPasswordValid(user)) {
             return "userid and password is not valid, please try again";
         }
-        return "";
-    }
 
-    public static String MenuValidate(String role) {
-        cConfig.connection();
-
-       if (role.equals("Admin")) {
-            menu.menuAdmin();
+        // Validasi role
+        if (!roleValidation(user)) {
+            return "role is not valid, please try again";
         }
-
         return "";
     }
 
@@ -97,7 +88,7 @@ public class cConfig {
     this.dataSource = dataSource;
     }
 
-    public boolean CheckUserExists(String userid) {
+    public static boolean CheckUserExists(String userid) {
     String sql = "SELECT * FROM user WHERE userId = ? ";
     cConfig.connection();
 
@@ -120,7 +111,7 @@ public class cConfig {
     }
 }
 
-    public boolean UserPasswordValid(userEntity user) {
+    public static boolean UserPasswordValid(userEntity user) {
     String sql = "SELECT * FROM user WHERE userId = ? and pass = ?";
     cConfig.connection();
     try (
@@ -128,6 +119,30 @@ public class cConfig {
     ) {
         stmt.setString(1,user.getUserid());
         stmt.setString(2,user.getPassword());
+        ResultSet resultSet = stmt.executeQuery();
+
+        if (resultSet.next()) {
+            // User Valid
+            resultSet.close();
+            return true;
+        } else {
+            resultSet.close();
+            return false;
+        }
+        } catch (SQLException ex) {
+        throw new RuntimeException(ex);
+        }
+    }
+
+    public static boolean roleValidation(userEntity user) {
+    String sql = "SELECT * FROM user WHERE userId = ? and pass = ? and role = ?";
+    cConfig.connection();
+    try (
+        PreparedStatement stmt = connect.prepareStatement(sql);
+    ) {
+        stmt.setString(1,user.getUserid());
+        stmt.setString(2,user.getPassword());
+        stmt.setString(3,user.getRole());
         ResultSet resultSet = stmt.executeQuery();
 
         if (resultSet.next()) {
@@ -820,7 +835,7 @@ public class cConfig {
             statement = connect.createStatement();
 
             // Querry MYSQL
-            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId,event.eventId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2,3 ORDER BY cnt DESC";
+            String query = "SELECT candidate.candidateId, eventcandidate.eventCandidateId, COUNT(*) cnt FROM user JOIN vote ON user.codeUser = vote.codeUser JOIN eventcandidate ON vote.codeEventCandidate = eventcandidate.codeEventCandidate JOIN event ON eventCandidate.codeEvent = event.codeEvent JOIN candidate ON eventcandidate.codeCandidate = candidate.codeCandidate GROUP BY 1,2 ORDER BY cnt DESC";
 
             // eksekusi querry
             resultData = statement.executeQuery(query);
@@ -973,7 +988,7 @@ public class cConfig {
             // looping pengisian variabel data
             while(resultData.next()){
 
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
+                data +=  "Desa : " + resultData.getString("eventId") + ", Memilih : " + resultData.getString("candidateId") + ", Sebanyak : " + resultData.getString("cnt") + "\n"; 
 
             }
 
@@ -1010,7 +1025,7 @@ public class cConfig {
             // looping pengisian variabel data
             while(resultData.next()){
 
-                data +=  "Desa : " + resultData.getString("eventId") + " Memilih : " + resultData.getString("candidateId") + " Sebanyak : " + resultData.getString("cnt") + "\n"; 
+                data +=  "Desa : " + resultData.getString("eventId") + ", Memilih : " + resultData.getString("candidateId") + ", Sebanyak : " + resultData.getString("cnt") + "\n"; 
 
             }
 
@@ -1133,5 +1148,141 @@ public class cConfig {
         return data;
     }
 
+    public static boolean ngeVoteKetua( String ketua, String lihatDesaVoter) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "INSERT INTO `eventcandidate` (`codeEventCandidate`,`eventCandidateId`, `codeEvent`, `codeCandidate`, `status`) VALUES (NULL, 'Ketua', '"+lihatDesaVoter+"', '"+ketua+"', 'active');" ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean ngeVoteWakil(String wakil, String lihatDesaVoter ) {
+        cConfig.connection();
+        
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "INSERT INTO `eventcandidate` (`codeEventCandidate`,`eventCandidateId`, `codeEvent`, `codeCandidate`, `status`) VALUES (NULL, 'Wakil', '"+lihatDesaVoter+"', '"+wakil+"', 'active');" ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+            
+
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean voteKetua(String tiketId) {
+        cConfig.connection();
+
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "INSERT INTO vote (codeEventCandidate, codeUser) VALUES ((SELECT MAX(codeEventCandidate) FROM eventcandidate)-1,'"+tiketId+"');" ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static boolean voteWakil(String tiketId) {
+        cConfig.connection();
+
+        boolean data = false ;
+
+        try {
+
+            statement = connect.createStatement();
+
+            String query = "INSERT INTO vote (codeEventCandidate, codeUser) VALUES ((SELECT MAX(codeEventCandidate) FROM eventcandidate),'"+tiketId+"');" ;
+
+            if(!statement.execute(query)){
+                data = true;
+            }
+
+            // close statement dan koneksi
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static String ticketId(String userid) {
+        cConfig.connection();
+
+        String data = "Data tidak di temukan";
+
+        try {
+
+            statement = connect.createStatement();
+            
+            String query = "SELECT * FROM user Where userId = '"+userid+"'";
+
+            resultData = statement.executeQuery(query);
+
+            data = "";
+
+            while(resultData.next()) {
+                data +=  "Tiket Voting kamu adalah : " + resultData.getString("codeUser") ; 
+            }
+
+            // close statement
+            statement.close();
+            connect.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+
+        
+    }
+    
 
 }

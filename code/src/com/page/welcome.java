@@ -18,7 +18,7 @@ public class welcome {
             + "Pilih [1/2] :");
             
             Scanner input = new Scanner(System.in);
-            String pilihan = input.next();
+            String pilihan = input.nextLine();
 
             if ( pilihan.equalsIgnoreCase("0")) {
                 System.out.println("Terimakasih!!");
@@ -41,7 +41,7 @@ public class welcome {
             }
             
             // Close Scanner
-            // input.close();
+            input.close();
         }
     }
     

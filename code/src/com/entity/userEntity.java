@@ -5,7 +5,7 @@ public class userEntity {
     private String userid;
     private String password;
     private String role;
-
+ 
     public String getUserid() {
         return userid;
     }
@@ -22,7 +22,7 @@ public class userEntity {
         this.password = pass;
     }
 
-    public String role(String role) {
+    public String getRole() {
          return role;
     }
 
